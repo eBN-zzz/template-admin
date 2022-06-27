@@ -103,6 +103,8 @@ export default {
     menu12: 'Menu1-2',
     menu2: 'Menu2',
     dashboard: 'Dashboard',
+    goods: 'Goods',
+    manage: 'Manage',
     analysis: 'Analysis',
     workplace: 'Workplace',
     guide: 'Guide',

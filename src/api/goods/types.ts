@@ -1,4 +1,4 @@
-export type TableData = {
+export type ManageData = {
   id: string
   no: number | string
   image: string
@@ -13,4 +13,16 @@ export type TableData = {
   saleNum: number
   auditStatus: number
   createAt: string | Date
+}
+
+export type CategoryData = {
+  id: string
+  name: string
+  lv: number
+  num: number
+  unit: string
+  menuStatus: number
+  showStatus: number
+  sort: number
+  children?: CategoryData[]
 }

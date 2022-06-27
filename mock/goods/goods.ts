@@ -49,13 +49,13 @@ for (let i = 0; i < count; i++) {
 export default [
   // 列表接口
   {
-    url: '/example/list',
+    url: '/goods/list',
     method: 'get',
     timeout,
     response: ({ query }) => {
-      const { goodsName, pageIndex, pageSize } = query
+      const { name, pageIndex, pageSize } = query
       const mockList = List.filter((item) => {
-        if (goodsName && item.name.indexOf(goodsName) < 0) return false
+        if (name && item.name.indexOf(name) < 0) return false
         return true
       })
       const pageList = mockList.filter(
@@ -72,7 +72,7 @@ export default [
   },
   // 保存接口
   {
-    url: '/example/save',
+    url: '/goods/save',
     method: 'post',
     timeout,
     response: ({ body }) => {
@@ -106,7 +106,7 @@ export default [
   },
   // 详情接口
   {
-    url: '/example/detail',
+    url: '/goods/detail',
     method: 'get',
     response: ({ query }) => {
       const { id } = query
@@ -122,7 +122,7 @@ export default [
   },
   // 删除接口
   {
-    url: '/example/delete',
+    url: '/goods/delete',
     method: 'post',
     response: ({ body }) => {
       const ids = body.ids

@@ -65,7 +65,7 @@ const dialogStyle = computed(() => {
     draggable
     :close-on-click-modal="false"
   >
-    <template #title>
+    <template #header>
       <div class="flex justify-between">
         <slot name="title">
           {{ title }}

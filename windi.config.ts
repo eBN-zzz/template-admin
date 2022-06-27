@@ -29,10 +29,10 @@ export default defineConfig({
     //   ...range(50).map((i) => `h-${i}px`)
     // },
     // margin: {
-    //   // ...range(50).map((i) => `mt-${i}px`),
-    //   // ...range(50).map((i) => `mr-${i}px`),
-    //   // ...range(50).map((i) => `mb-${i}px`),
-    //   // ...range(50).map((i) => `ml-${i}px`)
+    // ...range(50).map((i) => `mt-${i}px`),
+    // ...range(50).map((i) => `mr-${i}px`),
+    // ...range(50).map((i) => `mb-${i}px`),
+    // ...range(50).map((i) => `ml-${i}px`)
     // }
   },
   plugins: [

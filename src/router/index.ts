@@ -89,6 +89,28 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     ]
   },
   {
+    path: '/goods',
+    component: Layout,
+    redirect: '/goods/manage',
+    name: 'Goods',
+    meta: {
+      title: 'router.goods',
+      icon: 'ant-design:rest-filled',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'manage',
+        component: 'views/Goods/manage/index',
+        name: 'Manage',
+        meta: {
+          title: 'router.manage',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
     path: '/external-link',
     component: Layout,
     meta: {},

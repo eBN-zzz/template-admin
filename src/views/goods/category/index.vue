@@ -3,22 +3,23 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag } from 'element-plus'
+import { ElButton, ElSwitch } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, saveTableApi, delTableListApi } from '@/api/table'
+import { getTableListApi, saveTableApi, delTableListApi } from '@/api/goods/category'
 import { useTable } from '@/hooks/web/useTable'
-import { TableData } from '@/api/table/types'
-import { h, ref, unref, reactive } from 'vue'
+import { CategoryData } from '@/api/goods/types'
+import { ref, unref, reactive } from 'vue'
 import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
+import { schemaData } from './schema'
 
 const { register, tableObject, methods } = useTable<
   {
     total: number
-    list: TableData[]
+    list: CategoryData[]
   },
-  TableData
+  CategoryData
 >({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
@@ -34,121 +35,7 @@ getList()
 
 const { t } = useI18n()
 
-const crudSchemas = reactive<CrudSchema[]>([
-  {
-    field: 'index',
-    label: t('tableDemo.index'),
-    type: 'index',
-    form: {
-      show: false
-    },
-    detail: {
-      show: false
-    }
-  },
-  {
-    field: 'title',
-    label: t('tableDemo.title'),
-    search: {
-      show: true
-    },
-    form: {
-      colProps: {
-        span: 24
-      }
-    },
-    detail: {
-      span: 24
-    }
-  },
-  {
-    field: 'author',
-    label: t('tableDemo.author')
-  },
-  {
-    field: 'display_time',
-    label: t('tableDemo.displayTime'),
-    form: {
-      component: 'DatePicker',
-      componentProps: {
-        type: 'datetime',
-        valueFormat: 'YYYY-MM-DD HH:mm:ss'
-      }
-    }
-  },
-  {
-    field: 'importance',
-    label: t('tableDemo.importance'),
-    formatter: (_: Recordable, __: TableColumn, cellValue: number) => {
-      return h(
-        ElTag,
-        {
-          type: cellValue === 1 ? 'success' : cellValue === 2 ? 'warning' : 'danger'
-        },
-        () =>
-          cellValue === 1
-            ? t('tableDemo.important')
-            : cellValue === 2
-            ? t('tableDemo.good')
-            : t('tableDemo.commonly')
-      )
-    },
-    form: {
-      component: 'Select',
-      componentProps: {
-        options: [
-          {
-            label: '重要',
-            value: 3
-          },
-          {
-            label: '良好',
-            value: 2
-          },
-          {
-            label: '一般',
-            value: 1
-          }
-        ]
-      }
-    }
-  },
-  {
-    field: 'pageviews',
-    label: t('tableDemo.pageviews'),
-    form: {
-      component: 'InputNumber',
-      value: 0
-    }
-  },
-  {
-    field: 'content',
-    label: t('exampleDemo.content'),
-    table: {
-      show: false
-    },
-    form: {
-      component: 'Editor',
-      colProps: {
-        span: 24
-      }
-    },
-    detail: {
-      span: 24
-    }
-  },
-  {
-    field: 'action',
-    width: '260px',
-    label: t('tableDemo.action'),
-    form: {
-      show: false
-    },
-    detail: {
-      show: false
-    }
-  }
-])
+const crudSchemas = reactive<CrudSchema[]>(schemaData)
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
@@ -164,7 +51,7 @@ const AddAction = () => {
 
 const delLoading = ref(false)
 
-const delData = async (row: TableData | null, multiple: boolean) => {
+const delData = async (row: CategoryData | null, multiple: boolean) => {
   tableObject.currentRow = row
   const { delList, getSelections } = methods
   const selections = await getSelections()
@@ -179,8 +66,8 @@ const delData = async (row: TableData | null, multiple: boolean) => {
 
 const actionType = ref('')
 
-const action = (row: TableData, type: string) => {
-  dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
+const action = (row: CategoryData, type: string) => {
+  dialogTitle.value = type === 'edit' ? '编辑' : '详情'
   actionType.value = type
   tableObject.currentRow = row
   dialogVisible.value = true
@@ -195,7 +82,7 @@ const save = async () => {
   await write?.elFormRef?.validate(async (isValid) => {
     if (isValid) {
       loading.value = true
-      const data = (await write?.getFormData()) as TableData
+      const data = (await write?.getFormData()) as CategoryData
       const res = await saveTableApi({
         data
       })
@@ -230,21 +117,22 @@ const save = async () => {
       :columns="allSchemas.tableColumns"
       :data="tableObject.tableList"
       :loading="tableObject.loading"
+      row-key="id"
       :pagination="{
         total: tableObject.total
       }"
       @register="register"
     >
+      <template #menuStatus="{ row }">
+        <ElSwitch v-model="row.menuStatus" :active-value="1" :inactive-value="0" />
+      </template>
+      <template #showStatus="{ row }">
+        <ElSwitch v-model="row.showStatus" :active-value="1" :inactive-value="0" />
+      </template>
       <template #action="{ row }">
-        <ElButton type="primary" @click="action(row, 'edit')">
-          {{ t('exampleDemo.edit') }}
-        </ElButton>
-        <ElButton type="success" @click="action(row, 'detail')">
-          {{ t('exampleDemo.detail') }}
-        </ElButton>
-        <ElButton type="danger" @click="delData(row, false)">
-          {{ t('exampleDemo.del') }}
-        </ElButton>
+        <ElButton type="primary" link @click="action(row, 'edit')"> 编辑 </ElButton>
+        <ElButton type="success" link @click="action(row, 'detail')"> 详情 </ElButton>
+        <ElButton type="danger" link @click="delData(row, false)"> 删除 </ElButton>
       </template>
     </Table>
   </ContentWrap>

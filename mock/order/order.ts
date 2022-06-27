@@ -11,18 +11,12 @@ const count = 100
 let List: {
   id: string
   no: number | string
-  image: string
-  name: string
-  price: number
-  type: number
-  code: number | string
-  newStatus: number
-  shelvesStatus: number
-  recommendStatus: number
-  sort: number
-  saleNum: number
-  auditStatus: number
-  createAt: string | Date
+  submitDate: string
+  username: string
+  amount: number | string
+  payway: string
+  origin: number | string
+  status: number
 }[] = []
 
 for (let i = 0; i < count; i++) {
@@ -30,18 +24,12 @@ for (let i = 0; i < count; i++) {
     Mock.mock({
       id: '@id',
       no: '@guid',
-      image: "@image('200x200', '#FF6600')",
-      name: '@title(5, 10)',
-      price: '@float(60, 600, 2)',
-      code: '@guid',
-      type: '@integer(1, 20)',
-      newStatus: '@integer(0, 1)',
-      shelvesStatus: '@integer(0, 1)',
-      recommendStatus: '@integer(0, 1)',
-      sort: '@integer(1, 10)',
-      saleNum: '@integer(1, 1000)',
-      auditStatus: '@integer(0, 2)',
-      createAt: '@datetime("yyyy-MM-dd")' // HH:mm:ss
+      submitDate: '@datetime("yyyy-MM-dd  HH:mm:ss")', // HH:mm:ss
+      username: '@title(5, 10)',
+      amount: '@float(60, 600, 2)',
+      payway: '@integer(1, 3)',
+      origin: '@integer(1, 3)',
+      status: '@integer(1, 5)'
     })
   )
 }
@@ -49,13 +37,13 @@ for (let i = 0; i < count; i++) {
 export default [
   // 列表接口
   {
-    url: '/example/list',
+    url: '/order/list',
     method: 'get',
     timeout,
     response: ({ query }) => {
-      const { goodsName, pageIndex, pageSize } = query
+      const { name, pageIndex, pageSize } = query
       const mockList = List.filter((item) => {
-        if (goodsName && item.name.indexOf(goodsName) < 0) return false
+        if (name && item.username.indexOf(name) < 0) return false
         return true
       })
       const pageList = mockList.filter(
@@ -72,7 +60,7 @@ export default [
   },
   // 保存接口
   {
-    url: '/example/save',
+    url: '/order/save',
     method: 'post',
     timeout,
     response: ({ body }) => {
@@ -106,7 +94,7 @@ export default [
   },
   // 详情接口
   {
-    url: '/example/detail',
+    url: '/order/detail',
     method: 'get',
     response: ({ query }) => {
       const { id } = query
@@ -122,7 +110,7 @@ export default [
   },
   // 删除接口
   {
-    url: '/example/delete',
+    url: '/order/delete',
     method: 'post',
     response: ({ body }) => {
       const ids = body.ids

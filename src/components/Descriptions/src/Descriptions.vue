@@ -5,6 +5,8 @@ import { propTypes } from '@/utils/propTypes'
 import { ref, unref, PropType, computed, useAttrs } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 
+const detaultAttr = { span: 2, minWidth: 96 }
+
 const appStore = useAppStore()
 
 const mobile = computed(() => appStore.getMobile)
@@ -42,7 +44,8 @@ const getBindValue = computed(() => {
 
 const getBindItemValue = (item: DescriptionsSchema) => {
   const delArr: string[] = ['field']
-  const obj = { ...item }
+  console.log('%c 【delArr】-47', 'font-size:13px; background:#44A08D; color:#FFB88C;', delArr)
+  const obj = { ...detaultAttr, ...item }
   for (const key in obj) {
     if (delArr.indexOf(key) !== -1) {
       delete obj[key]

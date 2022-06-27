@@ -2,12 +2,12 @@
 import { Form } from '@/components/Form'
 import { useForm } from '@/hooks/web/useForm'
 import { PropType, reactive, watch } from 'vue'
-import { TableData } from '@/api/table/types'
+import { CategoryData } from '@/api/goods/types'
 import { required } from '@/utils/formRules'
 
 const props = defineProps({
   currentRow: {
-    type: Object as PropType<Nullable<TableData>>,
+    type: Object as PropType<Nullable<CategoryData>>,
     default: () => null
   },
   formSchema: {

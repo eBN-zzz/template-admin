@@ -10,6 +10,7 @@ import { set } from 'lodash-es'
 export default defineComponent({
   name: 'Table',
   props: {
+    border: propTypes.bool.def(true),
     pageSize: propTypes.number.def(10),
     currentPage: propTypes.number.def(1),
     // 是否多选
@@ -37,11 +38,11 @@ export default defineComponent({
     // 对齐方式
     align: propTypes.string
       .validate((v: string) => ['left', 'center', 'right'].includes(v))
-      .def('left'),
+      .def('center'),
     // 表头对齐方式
     headerAlign: propTypes.string
       .validate((v: string) => ['left', 'center', 'right'].includes(v))
-      .def('left'),
+      .def('center'),
     data: {
       type: Array as PropType<Recordable[]>,
       default: () => []

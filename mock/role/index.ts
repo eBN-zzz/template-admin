@@ -38,6 +38,86 @@ const adminList = [
     ]
   },
   {
+    path: '/goods',
+    component: '#',
+    redirect: '/goods/list',
+    name: 'Goods',
+    meta: {
+      title: 'router.goods',
+      icon: 'ant-design:rest-filled',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'goods-list',
+        component: 'views/goods/list/index',
+        name: 'GoodsList',
+        meta: {
+          title: 'router.goodsList',
+          noCache: true
+        }
+      },
+      {
+        path: 'category',
+        component: 'views/goods/category/index',
+        name: 'Category',
+        meta: {
+          title: 'router.category',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/order',
+    component: '#',
+    redirect: '/order/list1',
+    name: 'Order',
+    meta: {
+      title: 'router.order',
+      icon: 'ant-design:appstore-filled',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'order-list',
+        component: 'views/order/list/index',
+        name: 'OrderList',
+        meta: {
+          title: 'router.orderList',
+          noCache: true
+        }
+      },
+      {
+        path: 'setting',
+        component: 'views/order/setting/index',
+        name: 'Setting',
+        meta: {
+          title: 'router.orderSetting',
+          noCache: true
+        }
+      },
+      {
+        path: 'refund',
+        component: 'views/order/refund/index',
+        name: 'Refund',
+        meta: {
+          title: 'router.orderRefund',
+          noCache: true
+        }
+      },
+      {
+        path: 'refund-reason',
+        component: 'views/order/refund-reason/index',
+        name: 'RefundReson',
+        meta: {
+          title: 'router.orderRefundReson',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
     path: '/external-link',
     component: '#',
     meta: {},
@@ -349,74 +429,6 @@ const adminList = [
     ]
   },
   {
-    path: '/example',
-    component: '#',
-    redirect: '/example/example-dialog',
-    name: 'Example',
-    meta: {
-      title: 'router.example',
-      icon: 'ep:management',
-      alwaysShow: true
-    },
-    children: [
-      {
-        path: 'example-dialog',
-        component: 'views/Example/Dialog/ExampleDialog',
-        name: 'ExampleDialog',
-        meta: {
-          title: 'router.exampleDialog'
-        }
-      },
-      {
-        path: 'example-page',
-        component: 'views/Example/Page/ExamplePage',
-        name: 'ExamplePage',
-        meta: {
-          title: 'router.examplePage'
-        }
-      },
-      {
-        path: 'example-add',
-        component: 'views/Example/Page/ExampleAdd',
-        name: 'ExampleAdd',
-        meta: {
-          title: 'router.exampleAdd',
-          noTagsView: true,
-          noCache: true,
-          hidden: true,
-          showMainRoute: true,
-          activeMenu: '/example/example-page'
-        }
-      },
-      {
-        path: 'example-edit',
-        component: 'views/Example/Page/ExampleEdit',
-        name: 'ExampleEdit',
-        meta: {
-          title: 'router.exampleEdit',
-          noTagsView: true,
-          noCache: true,
-          hidden: true,
-          showMainRoute: true,
-          activeMenu: '/example/example-page'
-        }
-      },
-      {
-        path: 'example-detail',
-        component: 'views/Example/Page/ExampleDetail',
-        name: 'ExampleDetail',
-        meta: {
-          title: 'router.exampleDetail',
-          noTagsView: true,
-          noCache: true,
-          hidden: true,
-          showMainRoute: true,
-          activeMenu: '/example/example-page'
-        }
-      }
-    ]
-  },
-  {
     path: '/error',
     component: '#',
     redirect: '/error/404',
@@ -455,57 +467,6 @@ const adminList = [
   }
 ]
 
-const testList: string[] = [
-  '/dashboard',
-  '/dashboard/analysis',
-  '/dashboard/workplace',
-  'external-link',
-  'https://element-plus-admin-doc.cn/',
-  '/guide',
-  '/guide/index',
-  '/components',
-  '/components/form',
-  '/components/form/default-form',
-  '/components/form/use-form',
-  '/components/form/ref-form',
-  '/components/table',
-  '/components/table/default-table',
-  '/components/table/use-table',
-  '/components/table/ref-table',
-  '/components/editor-demo',
-  '/components/editor-demo/editor',
-  '/components/search',
-  '/components/descriptions',
-  '/components/image-viewer',
-  '/components/dialog',
-  '/components/icon',
-  '/components/echart',
-  '/components/count-to',
-  '/components/qrcode',
-  '/components/highlight',
-  '/components/infotip',
-  '/Components/InputPassword',
-  '/Components/Sticky',
-  '/hooks',
-  '/hooks/useWatermark',
-  '/level',
-  '/level/menu1',
-  '/level/menu1/menu1-1',
-  '/level/menu1/menu1-1/menu1-1-1',
-  '/level/menu1/menu1-2',
-  '/level/menu2',
-  '/example',
-  '/example/example-dialog',
-  '/example/example-page',
-  '/example/example-add',
-  '/example/example-edit',
-  '/example/example-detail',
-  '/error',
-  '/error/404-demo',
-  '/error/403-demo',
-  '/error/500-demo'
-]
-
 export default [
   // 列表接口
   {
@@ -517,7 +478,7 @@ export default [
       return {
         code: result_code,
         data: {
-          list: roleName === 'admin' ? adminList : testList
+          list: roleName === 'admin' ? adminList : []
         }
       }
     }

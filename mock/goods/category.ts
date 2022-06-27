@@ -6,42 +6,53 @@ const { result_code } = config
 
 const timeout = 1000
 
-const count = 100
+const count = 30
 
 let List: {
   id: string
-  no: number | string
-  image: string
   name: string
-  price: number
-  type: number
-  code: number | string
-  newStatus: number
-  shelvesStatus: number
-  recommendStatus: number
+  lv: number
+  num: number
+  unit: string
+  menuStatus: number
+  showStatus: number
   sort: number
-  saleNum: number
-  auditStatus: number
-  createAt: string | Date
+  pid: number
 }[] = []
 
 for (let i = 0; i < count; i++) {
   List.push(
     Mock.mock({
       id: '@id',
-      no: '@guid',
-      image: "@image('200x200', '#FF6600')",
       name: '@title(5, 10)',
-      price: '@float(60, 600, 2)',
-      code: '@guid',
-      type: '@integer(1, 20)',
-      newStatus: '@integer(0, 1)',
-      shelvesStatus: '@integer(0, 1)',
-      recommendStatus: '@integer(0, 1)',
+      lv: '@integer(0, 2)',
+      num: '@integer(0, 1000)',
+      unit: '@word(1, 3)',
+      menuStatus: '@integer(0, 1)',
+      showStatus: '@integer(0, 1)',
       sort: '@integer(1, 10)',
-      saleNum: '@integer(1, 1000)',
-      auditStatus: '@integer(0, 2)',
-      createAt: '@datetime("yyyy-MM-dd")' // HH:mm:ss
+      children: [
+        {
+          id: '@id',
+          name: '@title(5, 10)',
+          lv: '@integer(0, 2)',
+          num: '@integer(0, 1000)',
+          unit: '@word(1, 3)',
+          menuStatus: '@integer(0, 1)',
+          showStatus: '@integer(0, 1)',
+          sort: '@integer(1, 10)'
+        },
+        {
+          id: '@id',
+          name: '@title(5, 10)',
+          lv: '@integer(0, 2)',
+          num: '@integer(0, 1000)',
+          unit: '@word(1, 3)',
+          menuStatus: '@integer(0, 1)',
+          showStatus: '@integer(0, 1)',
+          sort: '@integer(1, 10)'
+        }
+      ]
     })
   )
 }
@@ -49,7 +60,7 @@ for (let i = 0; i < count; i++) {
 export default [
   // 列表接口
   {
-    url: '/example/list',
+    url: '/category/list',
     method: 'get',
     timeout,
     response: ({ query }) => {
@@ -72,7 +83,7 @@ export default [
   },
   // 保存接口
   {
-    url: '/example/save',
+    url: '/category/save',
     method: 'post',
     timeout,
     response: ({ body }) => {
@@ -106,7 +117,7 @@ export default [
   },
   // 详情接口
   {
-    url: '/example/detail',
+    url: '/category/detail',
     method: 'get',
     response: ({ query }) => {
       const { id } = query
@@ -122,7 +133,7 @@ export default [
   },
   // 删除接口
   {
-    url: '/example/delete',
+    url: '/category/delete',
     method: 'post',
     response: ({ body }) => {
       const ids = body.ids
